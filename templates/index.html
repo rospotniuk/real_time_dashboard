@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Realtime charts</title>
+        <meta charset="utf8">
+        <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maps.googleapis.com/maps/api/js"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
+        <script src="{{url_for('static', filename='LineChart.js')}}" defer></script>
+        <script src="{{url_for('static', filename='BarChart.js')}}" defer></script>
+        <script src="{{url_for('static', filename='app.js')}}" defer></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-8">
+                    <h2 class="text-center text-info">Real-time D3.js LineChart</h2>
+                    <div id="line_chart"></div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <h2 class="text-center text-info">Real-time D3.js BarChart</h2>
+                    <div id="bar_chart"></div>
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-xs-12 col-md-8">
+                    <h2 class="text-center text-info">Google Map with real-time updating dropping markers</h2>
+                    <div id="google_map"></div>
+                </div>
+                <div class="col-xs-12 col-md-3 col-md-offset-1">
+                    <h2 class="text-center text-info">Real-time D3.js PieChart</h2>
+                    <div id="pie_chart"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
