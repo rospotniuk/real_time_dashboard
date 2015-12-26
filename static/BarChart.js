@@ -3,7 +3,7 @@ var BarChart = function () {
     var margin = {top: 50, right: 0, bottom: 20, left: 20};
     var height = 400 - margin.top - margin.bottom;
     var colors = d3.scale.ordinal()
-        .range(["#98abc5", "#ff8c00"]);
+        .range(["#9ACD32", "#ff8c00"]);
 
     /* Sets selector of block where chart would be placed */
     this.selector = function (s) {

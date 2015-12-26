@@ -1,7 +1,7 @@
 [
   {"CountryName":"Somaliland","CapitalName":"Hargeisa","CapitalLatitude":"9.55","CapitalLongitude":"44.050000","CountryCode":"NULL","ContinentName":"Africa"},
   {"CountryName":"South Georgia and South Sandwich Islands","CapitalName":"King Edward Point","CapitalLatitude":"-54.283333","CapitalLongitude":"-36.500000","CountryCode":"GS","ContinentName":"Antarctica"},
-  {"CountryName":"French Southern and Antarctic Lands","CapitalName":"Port-aux-Fran???§ais","CapitalLatitude":"-49.35","CapitalLongitude":"70.216667","CountryCode":"TF","ContinentName":"Antarctica"},
+  {"CountryName":"French Southern and Antarctic Lands","CapitalName":"Port-aux-Fran?ais","CapitalLatitude":"-49.35","CapitalLongitude":"70.216667","CountryCode":"TF","ContinentName":"Antarctica"},
   {"CountryName":"Palestine","CapitalName":"Jerusalem","CapitalLatitude":"31.766666666666666","CapitalLongitude":"35.233333","CountryCode":"PS","ContinentName":"Asia"},
   {"CountryName":"Aland Islands","CapitalName":"Mariehamn","CapitalLatitude":"60.116667","CapitalLongitude":"19.900000","CountryCode":"AX","ContinentName":"Europe"},
   {"CountryName":"Nauru","CapitalName":"Yaren","CapitalLatitude":"-0.5477","CapitalLongitude":"166.920867","CountryCode":"NR","ContinentName":"Australia"},
@@ -62,7 +62,7 @@
   {"CountryName":"Cote d'Ivoire","CapitalName":"Yamoussoukro","CapitalLatitude":"6.816666666666666","CapitalLongitude":"-5.266667","CountryCode":"CI","ContinentName":"Africa"},
   {"CountryName":"Croatia","CapitalName":"Zagreb","CapitalLatitude":"45.8","CapitalLongitude":"16.000000","CountryCode":"HR","ContinentName":"Europe"},
   {"CountryName":"Cuba","CapitalName":"Havana","CapitalLatitude":"23.116666666666667","CapitalLongitude":"-82.350000","CountryCode":"CU","ContinentName":"North America"},
-  {"CountryName":"Cura???§ao","CapitalName":"Willemstad","CapitalLatitude":"12.1","CapitalLongitude":"-68.916667","CountryCode":"CW","ContinentName":"North America"},
+  {"CountryName":"Cura?ao","CapitalName":"Willemstad","CapitalLatitude":"12.1","CapitalLongitude":"-68.916667","CountryCode":"CW","ContinentName":"North America"},
   {"CountryName":"Cyprus","CapitalName":"Nicosia","CapitalLatitude":"35.166666666666664","CapitalLongitude":"33.366667","CountryCode":"CY","ContinentName":"Europe"},
   {"CountryName":"Czech Republic","CapitalName":"Prague","CapitalLatitude":"50.083333333333336","CapitalLongitude":"14.466667","CountryCode":"CZ","ContinentName":"Europe"},
   {"CountryName":"Denmark","CapitalName":"Copenhagen","CapitalLatitude":"55.666666666666664","CapitalLongitude":"12.583333","CountryCode":"DK","ContinentName":"Europe"},
