@@ -1,14 +1,14 @@
 body {
     font: 12px Arial;
 }
-
+/*
 path {
     stroke: steelblue;
     stroke-width: 2;
     fill: none;
     shape-rendering: crispEdges;
 }
-
+*/
 .axis path, .axis line {
     fill: none;
     stroke: grey;
@@ -20,4 +20,39 @@ path {
     fill: lightsteelblue;
     stroke-width: 1;
     stroke: steelblue;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 40px;
+    height: 25px;
+    padding: 4px;
+    font: 14px bold sans-serif;
+    background: silver;
+    border: 1px solid darkgrey;
+    border-radius: 7px;
+    pointer-events: none;
+}
+
+h1 {
+  position: absolute;
+  top: 500px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  text-align: center;
+  width: 960px;
+}
+
+div.sorted_tooltip {
+    position: absolute;
+    text-align: left;
+    width: 250px;
+    height: 45px;
+    padding: 4px;
+    font: 16px bold sans-serif;
+    background: silver;
+    border: 1px solid darkgrey;
+    border-radius: 7px;
+    pointer-events: none;
 }

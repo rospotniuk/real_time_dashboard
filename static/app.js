@@ -17,7 +17,10 @@ socket.on('pie_graph_data', function(msg) {
 
 socket.on('map_data', function(msg) {
     //console.log(msg);
-    addMarker(msg)
+    addMarker(msg);
+    progress_bar.update();
+    pie_chart.update();
+    sort_bar_chart.update()
 });
 
 setInterval(function() {
@@ -36,14 +39,26 @@ updateMarkers();
 var line_chart = new LineChart().selector('#line_chart');
 line_chart.init();
 
-var bar_chart = new BarChart().selector('#bar_chart');
+var bar_chart = new BarChart().selector('#balance');
 bar_chart.init();
 
+var globe = new RotatingGlobe().selector('#globe');
+globe.init();
+
+var progress_bar = new CircularProgressBar().selector('#progress_radial');
+progress_bar.init();
+
+var pie_chart = new PieChart().selector('#pie_chart');
+pie_chart.init();
+
+var sort_bar_chart = new SortedBarChart().selector('#sort_bar_chart');
+sort_bar_chart.init();
 
 /*
 Google map
  */
-var markers = [];
+var markers = [],
+    markers_data = [];
 var max_amount = 20;
 var map;
 
@@ -62,7 +77,8 @@ function addMarker (data) {
         lon: parseFloat(data["CapitalLongitude"]),
         capital: data["CapitalName"],
         continent: data["ContinentName"],
-        country: data["CountryName"]
+        country: data["CountryName"],
+        population: +data["CapitalPopulation"]
     };
 
     var marker = new google.maps.Marker({
@@ -73,8 +89,10 @@ function addMarker (data) {
     marker.setMap(map);
 
     markers.push(marker);
+    markers_data.push(mark);
     if (markers.length > max_amount) {
         markers.shift().setMap(null);
+        markers_data.shift()
     }
 
     google.maps.event.addListener(marker, 'click', function () {

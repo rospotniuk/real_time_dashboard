@@ -1,7 +1,7 @@
 var LineChart = function () {
     var self = this;
     var format_time = d3.time.format("%H:%M:%S");       // parse date
-    var margin = {top: 30, right: 20, bottom: 20, left: 50};
+    var margin = {top: 30, right: 15, bottom: 20, left: 50};
 
     /* Sets selector of block where chart would be placed */
     this.selector = function (s) {
@@ -62,6 +62,10 @@ var LineChart = function () {
             .datum(self.data_collector)
             .attr("class", "area")
             .attr("d", self.area);
+
+        self.div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
     };
 
     this.tick = function (data) {
@@ -85,6 +89,38 @@ var LineChart = function () {
             .transition()
             .duration(duration)
             .ease('linear');
+
+        self.div.transition()
+            .duration(1500)
+            .style("opacity", 0);
+
+        self.svg.selectAll(".dot").remove();
+        self.svg.selectAll("dot")
+            .data(self.data_collector)
+            .enter().append("circle")
+            .attr("class", "dot")
+            .attr('cx', function(d) { return self.x(format_time.parse(d.time)); })
+            .attr('cy', function (d) { return self.y(d.value); })
+            .attr('r', 4)
+            .style("fill", "white")
+			.style("stroke", "steelblue")
+			.style("stroke-width", "2px")
+			.on("mouseover", function(d) {
+                d3.select(this)
+                    .style("fill", "steelblue")
+                    .style("stroke", "white");
+				self.div.transition()
+					.duration(200)
+					.style("opacity", .8);
+				self.div.html(d.value)
+					.style("left", (d3.event.pageX - 25) + "px")
+					.style("top", (d3.event.pageY - 25) + "px");
+			})
+			.on("mouseout", function(d) {
+				self.div.transition()
+					.duration(100)
+					.style("opacity", 0);
+			});
 
         // shift axis left
         self.axisX.transition()

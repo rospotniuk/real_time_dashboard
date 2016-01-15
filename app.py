@@ -3,8 +3,9 @@ from flask.ext.socketio import SocketIO, emit
 
 import os
 import time
-import json
 from random import randint
+
+from utils import GetLatLon
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret_key'
@@ -35,23 +36,6 @@ def message():
 def message():
     emit('pie_graph_data', [{'sector': 'Sector{}'.format(i+1), 'value': randint(0,10)} for i in xrange(5)])
 
-
-class GetLatLon(object):
-    def __init__(self, path):
-        with open(path) as f:
-            self.data = json.load(f)
-        self.num = 0
-        self.length = len(self.data)
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.num < self.length:
-            cur_num, self.num = self.num, self.num+1
-            return self.data[cur_num]
-        else:
-            self.num = cur_num = 0
 
 genLatLon = GetLatLon('static/countries-capitals.json')
 
