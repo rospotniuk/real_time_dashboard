@@ -1,22 +1,15 @@
 var socket = io.connect('http://' + document.domain + ':' + location.port + '/app');
 
-socket.on('connect_to_server', function(msg) {
+socket.on('check_connection', function(msg) {
     console.log(msg);
 });
 
 socket.on('graph_data', function(msg) {
-    //console.log(msg);
     line_chart.tick(msg);
     bar_chart.update(msg)
 });
 
-socket.on('pie_graph_data', function(msg) {
-    console.log(msg);
-    //pie_chart.tick(msg)
-});
-
 socket.on('map_data', function(msg) {
-    //console.log(msg);
     addMarker(msg);
     progress_bar.update();
     pie_chart.update();
@@ -27,13 +20,35 @@ setInterval(function() {
     socket.emit('message');
 }, 1000);
 
-var updateMarkers = function() {
+(function updateMarkers() {
     socket.emit('message3');
-    var rand = Math.round(Math.random() * (3000 - 500)) + 500; // generate new time (between 3sec and 500 msec)
+    var rand = Math.round(Math.random() * 3000) + 1000; // generate new time (between 1 sec and 4 sec)
     setTimeout(updateMarkers, rand);
-};
-updateMarkers();
+}());
 
+socket.on('input', function(msg) {
+    emit_word_cloud.update(msg.words)
+});
+$('form#emit').submit(function(event) {
+    socket.emit('input_event', {data: $('#emit_data').val()});
+    return false;
+});
+
+var broadcast_words = [];
+socket.on('input_broadcast', function(msg) {
+    $('#last_word').text(msg.data);
+    if (broadcast_words.length < 20) {
+        broadcast_words.push({'text': msg.data, 'size': Math.round(300/msg.data.length)})
+    } else {
+        broadcast_words.shift();
+        broadcast_words.push({'text': msg.data, 'size': Math.round(300/msg.data.length)})
+    }
+    broadcast_word_cloud.update(broadcast_words)
+});
+$('form#broadcast').submit(function(event) {
+    socket.emit('input_broadcast_event', {data: $('#broadcast_data').val()});
+    return false;
+});
 
 
 var line_chart = new LineChart().selector('#line_chart');
@@ -53,6 +68,12 @@ pie_chart.init();
 
 var sort_bar_chart = new SortedBarChart().selector('#sort_bar_chart');
 sort_bar_chart.init();
+
+var emit_word_cloud = new WordCloud().selector("#emit_world_cloud");
+emit_word_cloud.init();
+
+var broadcast_word_cloud = new WordCloud('broadcast').selector("#broadcast_world_cloud");
+broadcast_word_cloud.init();
 
 /*
 Google map

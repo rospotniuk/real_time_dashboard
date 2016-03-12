@@ -3,9 +3,10 @@ from flask.ext.socketio import SocketIO, emit
 
 import os
 import time
-from random import randint
+import re
+from random import randint, choice
 
-from utils import GetLatLon
+from utils import GetLatLon, get_antonyms, get_synonyms, spell_corrector
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret_key'
@@ -32,17 +33,33 @@ def message():
     })
 
 
-@socketio.on('message2', namespace='/app')
-def message():
-    emit('pie_graph_data', [{'sector': 'Sector{}'.format(i+1), 'value': randint(0,10)} for i in xrange(5)])
-
-
 genLatLon = GetLatLon('static/countries-capitals.json')
 
 @socketio.on('message3', namespace='/app')
 def message():
     emit('map_data', genLatLon.__next__())
 
+
+@socketio.on('input_broadcast_event', namespace='/app')
+def test_message(message):
+    emit('input_broadcast', {'data': message['data']})
+    print message
+
+@socketio.on('input_event', namespace='/app')
+def test_message(message):
+    if len(message['data'].split()) == 1:
+        limit = 20   # Not more than `limit` antonyms and synonyms
+        antonyms = get_antonyms(message['data'], limit)
+        synonyms = get_synonyms(message['data'], limit)
+        words = map(lambda x: {'text': x, 'flag': 1, 'size': randint(10,50)}, synonyms)
+        words.extend(map(lambda x: {'text': x, 'size': randint(10,50)}, antonyms))
+    else:
+        words = map(lambda x: {'text': x, 'flag': choice([0, 1]), 'size': randint(10,50)}, re.findall("[a-zA-Z\d]+", message['data']))
+    emit('input', {'words': words})
+
+@socketio.on('input_broadcast_event', namespace='/app')
+def test_message(message):
+    emit('input_broadcast', {'data': message['data']}, broadcast=True)
 
 @socketio.on('disconnect', namespace='/app')
 def disconnect():
