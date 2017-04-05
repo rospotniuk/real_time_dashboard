@@ -1,7 +1,5 @@
 var RotatingGlobe = function () {
     var self = this;
-    var sens = 0.25,
-        focused;
 
     /* Sets selector of block where chart would be placed */
     this.selector = function (s) {
@@ -15,10 +13,9 @@ var RotatingGlobe = function () {
 
         self.projection = d3.geo.orthographic()
             .scale(self.width / 2.3)
-            //.rotate([0, 0])
+            .rotate([0, 0])
             .translate([self.width / 2, self.height / 2])
-            .clipAngle(90)
-            //.precision(0.6);
+            .clipAngle(90);
 
         self.graticule = d3.geo.graticule();
 
@@ -35,12 +32,12 @@ var RotatingGlobe = function () {
             .context(self.context);
 
         queue()
-            .defer(d3.json, "static/geodata/world.json")
-            .defer(d3.tsv, "static/geodata/world_country_names.tsv")
+            .defer(d3.json, "/static/geodata/world.json")
             .await(ready);
     };
 
-    function ready(error, world, names) {
+
+    function ready(error, world) {
         if (error) throw error;
 
         var globe = {type: "Sphere"},
@@ -51,14 +48,9 @@ var RotatingGlobe = function () {
             i = -1,
             n = countries.length;
 
-            countries = countries.filter(function(d) {
-                return names.some(function(n) {
-                    if (d.id == +n["?id"]) return d.name = n.name;
-                });
-            }).sort(function(a, b) {
-                return a.name.localeCompare(b.name);
-            });
         var back = [180, 0];
+
+        var arr = [[10,10], [50,50], [-20, 80]];
 
         (function transition() {
             d3.transition()

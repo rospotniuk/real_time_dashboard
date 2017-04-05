@@ -35,35 +35,38 @@ def message():
 
 genLatLon = GetLatLon('static/countries-capitals.json')
 
-@socketio.on('message3', namespace='/app')
-def message():
+@socketio.on('google_map', namespace='/app')
+def google_map():
     emit('map_data', genLatLon.__next__())
 
+@socketio.on('globe', namespace='/app')
+def globe():
+    emit('globe_data', [randint(0,90), randint(0,90)])
+    #print 'globe'
 
 @socketio.on('input_broadcast_event', namespace='/app')
-def test_message(message):
-    emit('input_broadcast', {'data': message['data']})
-    print message
+def word_cloud_broadcast(msg):
+    emit('input_broadcast', {'data': msg['data']})
 
 @socketio.on('input_event', namespace='/app')
-def test_message(message):
-    if len(message['data'].split()) == 1:
+def word_cloud(msg):
+    if len(msg['data'].split()) == 1:
         limit = 20   # Not more than `limit` antonyms and synonyms
-        antonyms = get_antonyms(message['data'], limit)
-        synonyms = get_synonyms(message['data'], limit)
+        antonyms = get_antonyms(msg['data'], limit)
+        synonyms = get_synonyms(msg['data'], limit)
         words = map(lambda x: {'text': x, 'flag': 1, 'size': randint(10,50)}, synonyms)
         words.extend(map(lambda x: {'text': x, 'size': randint(10,50)}, antonyms))
     else:
-        words = map(lambda x: {'text': x, 'flag': choice([0, 1]), 'size': randint(10,50)}, re.findall("[a-zA-Z\d]+", message['data']))
+        words = map(lambda x: {'text': x, 'flag': choice([0, 1]), 'size': randint(10,50)}, re.findall("[a-zA-Z\d]+", msg['data']))
     emit('input', {'words': words})
 
 @socketio.on('input_broadcast_event', namespace='/app')
-def test_message(message):
-    emit('input_broadcast', {'data': message['data']}, broadcast=True)
+def test_message(msg):
+    emit('input_broadcast', {'data': msg['data']}, broadcast=True)
 
 @socketio.on('disconnect', namespace='/app')
 def disconnect():
-    print 'Client disconnected!'
+    print('Client disconnected!')
 
 
 if __name__ == '__main__':

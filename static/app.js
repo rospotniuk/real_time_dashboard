@@ -21,7 +21,7 @@ setInterval(function() {
 }, 1000);
 
 (function updateMarkers() {
-    socket.emit('message3');
+    socket.emit('google_map');
     var rand = Math.round(Math.random() * 3000) + 1000; // generate new time (between 1 sec and 4 sec)
     setTimeout(updateMarkers, rand);
 }());

@@ -47,8 +47,9 @@ def spell_corrector(text, similarity=0.01):
         b = TextBlob(text).correct()
     else:
         b = Word(text).spellcheck()
+        #print b
         # return only those results, for which the similarity factor is greater than 0.01
-        b = (next(iter(())) if item[1] <= 0.01 else item[0] for item in b)
+        b = (next(iter(())) if item[1] <= similarity else item[0] for item in b)
     return list(b)
 
 
