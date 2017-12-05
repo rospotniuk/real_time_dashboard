@@ -50,15 +50,16 @@ def word_cloud_broadcast(msg):
 
 @socketio.on('input_event', namespace='/app')
 def word_cloud(msg):
-    if len(msg['data'].split()) == 1:
-        limit = 20   # Not more than `limit` antonyms and synonyms
-        antonyms = get_antonyms(msg['data'], limit)
-        synonyms = get_synonyms(msg['data'], limit)
-        words = map(lambda x: {'text': x, 'flag': 1, 'size': randint(10,50)}, synonyms)
-        words.extend(map(lambda x: {'text': x, 'size': randint(10,50)}, antonyms))
-    else:
-        words = map(lambda x: {'text': x, 'flag': choice([0, 1]), 'size': randint(10,50)}, re.findall("[a-zA-Z\d]+", msg['data']))
-    emit('input', {'words': words})
+	print(msg)
+	if len(msg['data'].split()) == 1:
+		limit = 20   # Not more than `limit` antonyms and synonyms
+		antonyms = get_antonyms(msg['data'], limit)
+		synonyms = get_synonyms(msg['data'], limit)
+		words = list(map(lambda x: {'text': x, 'flag': 1, 'size': randint(10,50)}, synonyms))
+		words.extend(list(map(lambda x: {'text': x, 'size': randint(10,50)}, antonyms)))
+	else:
+		words = list(map(lambda x: {'text': x, 'flag': choice([0, 1]), 'size': randint(10,50)}, re.findall("[a-zA-Z\d]+", msg['data'])))
+	emit('input', {'words': words})
 
 @socketio.on('input_broadcast_event', namespace='/app')
 def test_message(msg):
